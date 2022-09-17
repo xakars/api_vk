@@ -44,12 +44,12 @@ def upload_photo_to_server(token, photo_name):
             'photo': file
         }
         response = requests.post(url, params=payloads, files=files)
-        response.raise_for_status()
-        response_json = response.json()
-        vk_server = response_json["server"]
-        vk_photo = response_json["photo"]
-        vk_hash = response_json["hash"]
-        return vk_server, vk_photo, vk_hash
+    response.raise_for_status()
+    response_json = response.json()
+    vk_server = response_json["server"]
+    vk_photo = response_json["photo"]
+    vk_hash = response_json["hash"]
+    return vk_server, vk_photo, vk_hash
 
 
 def save_uploaded_photo(token, photo_name):
