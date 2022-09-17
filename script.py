@@ -33,9 +33,9 @@ def get_server_address_for_upload(token):
     return response.json()["response"]["upload_url"]
 
 
-def upload_photo_to_server(token, photo_name):
+def upload_photo_to_server(token, upload_url, photo_name):
     with open(photo_name, 'rb') as file:
-        url = get_server_address_for_upload(token)
+        url = upload_url
         payloads = {
             "access_token": token,
             "v": 5.131
@@ -52,9 +52,8 @@ def upload_photo_to_server(token, photo_name):
     return vk_server, vk_photo, vk_hash
 
 
-def save_uploaded_photo(token, photo_name):
+def save_uploaded_photo(token, vk_server, vk_photo, vk_hash):
     url = "https://api.vk.com/method/photos.saveWallPhoto"
-    vk_server, vk_photo, vk_hash = upload_photo_to_server(token, photo_name)
     payloads = {
         "access_token": token,
         "v": 5.131,
@@ -72,9 +71,8 @@ def save_uploaded_photo(token, photo_name):
     return owner_id, media_id
 
 
-def post_photo_to_wall(token, group_id, photo_name, message):
+def post_photo_to_wall(token, group_id, owner_id, media_id, message):
     url = "https://api.vk.com/method/wall.post"
-    owner_id, media_id = save_uploaded_photo(token, photo_name)
     payloads = {
         "access_token": token,
         "v": 5.131,
@@ -93,7 +91,10 @@ def main():
         token = os.environ["ACCESS_TOKEN"]
         group_id = os.environ["GROUP_ID"]
         photo_name, message = fetch_image_from_xkcd()
-        post_photo_to_wall(token, group_id, photo_name, message)
+        upload_url = get_server_address_for_upload(token)
+        vk_server, vk_photo, vk_hash = upload_photo_to_server(token, upload_url, photo_name)
+        owner_id, media_id = save_uploaded_photo(token, vk_server, vk_photo, vk_hash)
+        post_photo_to_wall(token, group_id, owner_id, media_id, message)
     finally:
         dir_name = './'
         files = os.listdir('./')
