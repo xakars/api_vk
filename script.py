@@ -88,12 +88,19 @@ def post_photo_to_wall(token, group_id, photo_name, message):
 
 
 def main():
-    load_dotenv()
-    token = os.environ["ACCESS_TOKEN"]
-    group_id = os.environ["GROUP_ID"]
-    photo_name, message = fetch_image_from_xkcd()
-    post_photo_to_wall(token, group_id, photo_name, message)
-    os.remove(photo_name)
+    try:
+        load_dotenv()
+        token = os.environ["ACCESS_TOKEN"]
+        group_id = os.environ["GROUP_ID"]
+        photo_name, message = fetch_image_from_xkcd()
+        post_photo_to_wall(token, group_id, photo_name, message)
+    finally:
+        dir_name = './'
+        files = os.listdir('./')
+        for item in files:
+            if item.endswith(".png"):
+                os.remove(os.path.join(dir_name, item))
+
 
 if __name__ == "__main__":
     main()
