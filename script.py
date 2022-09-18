@@ -87,8 +87,8 @@ def post_photo_to_wall(token, group_id, owner_id, media_id, message):
 
 def main():
     load_dotenv()
-    token = os.environ["ACCESS_TOKEN"]
-    group_id = os.environ["GROUP_ID"]
+    token = os.environ["VK_ACCESS_TOKEN"]
+    group_id = os.environ["VK_GROUP_ID"]
     try:
         photo_name, message = fetch_image_from_xkcd()
         upload_url = get_server_address_for_upload(token)
