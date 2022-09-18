@@ -10,8 +10,8 @@ pip install -r requirements.txt
 
 Задайте ACCESS_TOKEN в файле .env, а также id группы в параметре GROUP_ID:
 ```
-ACCESS_TOKEN=
-GROUP_ID=
+VK_ACCESS_TOKEN=
+VK_GROUP_ID=
 ```
 Запустите скрипт командой:
 ```
