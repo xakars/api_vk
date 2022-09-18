@@ -8,7 +8,7 @@ pip install -r requirements.txt
 ``` 
 Чтобы пользоваться скрипотом Вам понадобится токен access_token для [ВКонтакте](https://vk.com/).
 
-Задайте ACCESS_TOKEN в файле .env, а также id группы в параметре GROUP_ID:
+Задайте VK_ACCESS_TOKEN в файле .env, а также id группы в параметре VK_GROUP_ID:
 ```
 VK_ACCESS_TOKEN=
 VK_GROUP_ID=
