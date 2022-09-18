@@ -78,7 +78,7 @@ def post_photo_to_wall(token, group_id, owner_id, media_id, message):
         "v": 5.131,
         "from_group": 1,
         "message": message,
-        "owner_id": group_id,
+        "owner_id": f"-{group_id}",
         "attachments": f"photo{owner_id}_{media_id}>"
     }
     response = requests.post(url, params=payloads)
