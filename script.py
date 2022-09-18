@@ -86,21 +86,17 @@ def post_photo_to_wall(token, group_id, owner_id, media_id, message):
 
 
 def main():
+    load_dotenv()
+    token = os.environ["ACCESS_TOKEN"]
+    group_id = os.environ["GROUP_ID"]
     try:
-        load_dotenv()
-        token = os.environ["ACCESS_TOKEN"]
-        group_id = os.environ["GROUP_ID"]
         photo_name, message = fetch_image_from_xkcd()
         upload_url = get_server_address_for_upload(token)
         vk_server, vk_photo, vk_hash = upload_photo_to_server(token, upload_url, photo_name)
         owner_id, media_id = save_uploaded_photo(token, vk_server, vk_photo, vk_hash)
         post_photo_to_wall(token, group_id, owner_id, media_id, message)
     finally:
-        dir_name = './'
-        files = os.listdir('./')
-        for item in files:
-            if item.endswith(".png"):
-                os.remove(os.path.join(dir_name, item))
+        os.remove(photo_name)
 
 
 if __name__ == "__main__":
